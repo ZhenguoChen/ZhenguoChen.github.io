@@ -22,14 +22,14 @@
     <meta property="og:site_name" content="Zhenguo Chen">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Image Captioning Using Neural Network (CNN &amp; LSTM)">
-    <meta property="og:description" content="In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:">
+    <meta property="og:description" content="In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:             A man on a bicycle down a dirt road.                a dog is running through the grass .    These two images are random images downloaded">
     <meta property="og:url" content="http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/">
     <meta property="og:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta property="article:published_time" content="2017-05-16T17:14:50.000Z">
-    <meta property="article:modified_time" content="2017-05-16T21:22:26.000Z">
+    <meta property="article:modified_time" content="2017-05-17T16:42:26.000Z">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Image Captioning Using Neural Network (CNN &amp; LSTM)">
-    <meta name="twitter:description" content="In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:">
+    <meta name="twitter:description" content="In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:             A man on a bicycle down a dirt road.                a dog is running through the grass .    These two images are random images downloaded">
     <meta name="twitter:url" content="http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/">
     <meta name="twitter:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta name="twitter:label1" content="Written by">
@@ -55,14 +55,14 @@
     "headline": "Image Captioning Using Neural Network (CNN &amp; LSTM)",
     "url": "http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/",
     "datePublished": "2017-05-16T17:14:50.000Z",
-    "dateModified": "2017-05-16T21:22:26.000Z",
+    "dateModified": "2017-05-17T16:42:26.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "http://localhost:2368/content/images/2017/05/sea.jpeg",
         "width": 1920,
         "height": 1200
     },
-    "description": "In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:",
+    "description": "In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:             A man on a bicycle down a dirt road.                a dog is running through the grass .    These two images are random images downloaded",
     "mainEntityOfPage": {
         "@type": "WebPage",
         "@id": "http://localhost:2368"
@@ -111,8 +111,54 @@
         </header>
 
         <section class="post-content">
-            <p>In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples: <br>
-<img src="https://github.com/ZhenguoChen/ZhenguoChen.github.io/tree/master/static/image-captioning-using-neural-network-cnn-lstm/bike.jpg" alt="The Ghost Logo"></p>
+            <p>In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:</p>
+
+<figure>  
+    <img src="../content/images/2017/05/image10.jpg" width="400" align="center">
+    <figcaption align="center">A man on a bicycle down a dirt road.</figcaption>
+</figure>  
+
+<figure>  
+    <img src="../content/images/2017/05/image1.jpg" width="400">
+    <figcaption align="center">a dog is running through the grass .</figcaption>
+</figure>  
+
+<p>These two images are random images downloaded from internet, but our model can still generate realistic caption for the image. Our model is trying to understand the objects in the scene and generate a human readable caption. For our baseline, we use <a href="http://cvcl.mit.edu/Papers/OlivaTorralbaPBR2006.pdf">GIST</a> for feature extraction, and KNN (K Nearest Neighbors) for captioning. For our final model, we built our model using <a href="https://keras.io/">Keras</a>, and use <a href="http://www.robots.ox.ac.uk/~vgg/research/very_deep/">VGG</a> (Visual Geometry Group) neural network for feature extraction, <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">LSTM</a> for captioning. Our code with a writeup are available on <a href="https://github.com/ZhenguoChen/csci5622Project">Github</a>. Also, we have a short video on <a href="https://www.youtube.com/watch?v=f2waevH1b6I">YouTube</a>.</p>
+
+<h2 id="howthisworks">How this works</h2>
+
+<ul>
+<li>Feature extraction</li>
+<li>Train a captioning model</li>
+<li>Generate a caption from through model</li>
+</ul>
+
+<p>To train a image captioning model, we use the <a href="http://shannon.cs.illinois.edu/DenotationGraph/">Flickr30K</a> dataset, which contains 30k images along with five captions for each image. And we extract features from the images and save these them as numpy array. Then we feed the features into captioning model and get the model trained. Given a new image, we first do a feature extraction, then we feed the features into trained model and get prediction. Quite straightforward, right? <br>
+<img src="../content/images/2017/05/captioning-model.jpg" alt="captioning process"></p>
+
+<h2 id="baselinegistknn">Baseline: GIST &amp; KNN</h2>
+
+<p>For our baseline, we use GIST to present the images as their features which is array with length 4096. Then we fed these features into KNN model (use ball tree in sklearn):  </p>
+
+<pre><code>    # read image
+    img = Image.open('./data/Flicker8k_Dataset/'+im_name)
+    # convert to array
+    img = np.asarray(img)
+    # get descriptor (features)
+    desc = gist.extract(img)
+</code></pre>
+
+<pre><code>    # trains includes features and captions of images
+    knn = BallTree(trains['feats'])
+</code></pre>
+
+<p>The training part is quite simple! Then we are going to do prediction. To get the prediction for test image A, we use GIST to extract features A' from A.  And we use BallTree to find the K nearest neighbors of A' from which we get all the candidate captions. The last step is deciding which caption we are going to use. Here, we make the decision according to <a href="https://arxiv.org/abs/1505.04467">consensus</a>. We use BLEU score in nltk to measure the similarity between two captions, then we choose the caption which maximize the following formula:</p>
+
+<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>  
+
+<p lang="latex">C^* = argmax_{c\in C}\sum_{c'\in C}{Sim(c', c)}</p>  
+
+<p>Then we get our prediction! Simple enough! Let's look at something more complicated.</p>
         </section>
 
         <footer class="post-footer">

@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="../favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=50f8ff6180">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=54a8fda773">
 
 
     <link rel="canonical" href="http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/">
@@ -26,7 +26,7 @@
     <meta property="og:url" content="http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/">
     <meta property="og:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta property="article:published_time" content="2017-05-16T17:14:50.000Z">
-    <meta property="article:modified_time" content="2017-05-17T16:42:26.000Z">
+    <meta property="article:modified_time" content="2017-05-17T17:02:40.000Z">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Image Captioning Using Neural Network (CNN &amp; LSTM)">
     <meta name="twitter:description" content="In this blog, I will present a image captioning model, which generate a realistic caption for an input image. To help understand this topic, here are examples:             A man on a bicycle down a dirt road.                a dog is running through the grass .    These two images are random images downloaded">
@@ -55,7 +55,7 @@
     "headline": "Image Captioning Using Neural Network (CNN &amp; LSTM)",
     "url": "http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/",
     "datePublished": "2017-05-16T17:14:50.000Z",
-    "dateModified": "2017-05-17T16:42:26.000Z",
+    "dateModified": "2017-05-17T17:02:40.000Z",
     "image": {
         "@type": "ImageObject",
         "url": "http://localhost:2368/content/images/2017/05/sea.jpeg",
@@ -154,11 +154,23 @@
 
 <p>The training part is quite simple! Then we are going to do prediction. To get the prediction for test image A, we use GIST to extract features A' from A.  And we use BallTree to find the K nearest neighbors of A' from which we get all the candidate captions. The last step is deciding which caption we are going to use. Here, we make the decision according to <a href="https://arxiv.org/abs/1505.04467">consensus</a>. We use BLEU score in nltk to measure the similarity between two captions, then we choose the caption which maximize the following formula:</p>
 
-<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>  
+<p><img src="../content/images/2017/05/Screen-Shot-2017-05-17-at-10.51.55-AM.png" alt="consensus">
+Then we get our prediction! Simple enough! Let's look at something more complicated.</p>
 
-<p lang="latex">C^* = argmax_{c\in C}\sum_{c'\in C}{Sim(c', c)}</p>  
+<h2 id="finalmodelvgglstmkeras">Final Model: VGG &amp; LSTM (Keras)</h2>
 
-<p>Then we get our prediction! Simple enough! Let's look at something more complicated.</p>
+<p>For our final, we built our model using Keras, which is a simple wrapper for implementing the building blocks of advanced machine learning algorithms. To achieve higher performance, we also use GPU. Here is the instruction of <a href="https://keras.io/#installation">install</a> Keras with GPU and use Tensorflow as backend.</p>
+
+<h3 id="featureextractionvgg1619">Feature extraction: VGG16/19</h3>
+            <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=819156208247732";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+			<div class="fb-comments" data-href="https://zhenguochen.github.io/image-captioning-using-neural-network-cnn-lstm/" data-numposts="10"></div>
         </section>
 
         <footer class="post-footer">
@@ -215,7 +227,7 @@
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=50f8ff6180"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=50f8ff6180"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=54a8fda773"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=54a8fda773"></script>
 
 </body>

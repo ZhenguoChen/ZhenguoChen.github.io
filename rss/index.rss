@@ -1,0 +1,269 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Zhenguo Chen</title><description>Thoughts, stories and ideas.</description><link>http://localhost:2368/</link><generator>Ghost 0.11</generator><lastBuildDate>Tue, 20 Mar 2018 00:29:11 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Image Captioning Using Neural Network (CNN &amp; LSTM)</title><description>&lt;p&gt;In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:&lt;/p&gt;
+
+&lt;figure&gt;  
+    &lt;img src="http://localhost:2368/content/images/2017/05/image10.jpg" width="400" align="center"&gt;
+    &lt;figcaption align="center"&gt;A man on a bicycle down a dirt road.&lt;/figcaption&gt;
+&lt;/figure&gt;  
+
+&lt;figure&gt;  
+    &lt;img src="http://localhost:2368/content/images/2017/05/image1.jpg" width="400"&gt;
+    &lt;figcaption align="center"&gt;a dog is running through the grass .&lt;/figcaption&gt;
+&lt;/figure&gt;  
+
+&lt;p&gt;These two images are random images downloaded&lt;/p&gt;</description><link>http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/</link><guid isPermaLink="false">2425ac3c-976d-4ef9-a01d-765932ee3428</guid><dc:creator>Zhenguo Chen</dc:creator><pubDate>Tue, 16 May 2017 17:14:50 GMT</pubDate><media:content url="http://localhost:2368/content/images/2017/05/sea.jpeg" medium="image"/><content:encoded>&lt;img src="http://localhost:2368/content/images/2017/05/sea.jpeg" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;&lt;p&gt;In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:&lt;/p&gt;
+
+&lt;figure&gt;  
+    &lt;img src="http://localhost:2368/content/images/2017/05/image10.jpg" width="400" align="center" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;
+    &lt;figcaption align="center"&gt;A man on a bicycle down a dirt road.&lt;/figcaption&gt;
+&lt;/figure&gt;  
+
+&lt;figure&gt;  
+    &lt;img src="http://localhost:2368/content/images/2017/05/image1.jpg" width="400" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;
+    &lt;figcaption align="center"&gt;a dog is running through the grass .&lt;/figcaption&gt;
+&lt;/figure&gt;  
+
+&lt;p&gt;These two images are random images downloaded from internet, but our model can still generate realistic caption for the image. Our model is trying to understand the objects in the scene and generate a human readable caption. For our baseline, we use &lt;a href="http://cvcl.mit.edu/Papers/OlivaTorralbaPBR2006.pdf"&gt;GIST&lt;/a&gt; for feature extraction, and KNN (K Nearest Neighbors) for captioning. For our final model, we built our model using &lt;a href="https://keras.io/"&gt;Keras&lt;/a&gt;, and use &lt;a href="http://www.robots.ox.ac.uk/~vgg/research/very_deep/"&gt;VGG&lt;/a&gt; (Visual Geometry Group) neural network for feature extraction, &lt;a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/"&gt;LSTM&lt;/a&gt; for captioning. Our code with a writeup are available on &lt;a href="https://github.com/ZhenguoChen/csci5622Project"&gt;Github&lt;/a&gt;. Also, we have a short video on &lt;a href="https://www.youtube.com/watch?v=f2waevH1b6I"&gt;YouTube&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="howthisworks"&gt;How this works&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Feature extraction&lt;/li&gt;
+&lt;li&gt;Train a captioning model&lt;/li&gt;
+&lt;li&gt;Generate a caption from through model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To train a image captioning model, we use the &lt;a href="http://shannon.cs.illinois.edu/DenotationGraph/"&gt;Flickr30K&lt;/a&gt; dataset, which contains 30k images along with five captions for each image. And we extract features from the images and save these them as numpy array. Then we feed the features into captioning model and get the model trained. Given a new image, we first do a feature extraction, then we feed the features into trained model and get prediction. Quite straightforward, right? &lt;br&gt;
+&lt;img src="http://localhost:2368/content/images/2017/05/captioning-model.jpg" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;&lt;/p&gt;
+
+&lt;h2 id="baselinegistknn"&gt;Baseline: GIST &amp;amp; KNN&lt;/h2&gt;
+
+&lt;p&gt;For our baseline, we use GIST to present the images as their features which is array with length 4096. Then we fed these features into KNN model (use ball tree in sklearn):  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    # read image
+    img = Image.open('./data/Flicker8k_Dataset/'+im_name)
+    # convert to array
+    img = np.asarray(img)
+    # get descriptor (features)
+    desc = gist.extract(img)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;    # trains includes features and captions of images
+    knn = BallTree(trains['feats'])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The training part is quite simple! Then we are going to do prediction. To get the prediction for test image A, we use GIST to extract features A' from A.  And we use BallTree to find the K nearest neighbors of A' from which we get all the candidate captions. The last step is deciding which caption we are going to use. Here, we make the decision according to &lt;a href="https://arxiv.org/abs/1505.04467"&gt;consensus&lt;/a&gt;. We use &lt;a href="http://www.aclweb.org/anthology/P02-1040.pdf"&gt;BLEU&lt;/a&gt; score in nltk to measure the similarity between two captions, then we choose the caption which maximize the following formula:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2017/05/Screen-Shot-2017-05-17-at-10.51.55-AM.png" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;
+Then we get our prediction! Simple enough! Let's look at something more complicated.&lt;/p&gt;
+
+&lt;h2 id="finalmodelvgglstmkeras"&gt;Final Model: VGG &amp;amp; LSTM (Keras)&lt;/h2&gt;
+
+&lt;p&gt;For our final, we built our model using Keras, which is a simple wrapper for implementing the building blocks of advanced machine learning algorithms. To achieve higher performance, we also use GPU. Here is the instruction of &lt;a href="https://keras.io/#installation"&gt;install&lt;/a&gt; Keras with GPU and use Tensorflow as backend.&lt;/p&gt;
+
+&lt;p&gt;During training, we use VGG for feature extraction, then fed features, captions, mask (record previous words) and position (position of current in the caption) into LSTM. The ground truth Y is the next word in the caption.&lt;/p&gt;
+
+&lt;p&gt;For prediction, we first extract features from image using VGG, then use #START# tag to start the prediction process. Finally, use a dictionary to interpret the output y into words.&lt;/p&gt;
+
+&lt;h3 id="featureextractionvgg1619"&gt;Feature Extraction: VGG16/19&lt;/h3&gt;
+
+&lt;p&gt;There are two versions of VGG network, 16 layers and 19 layers. We mainly focus on VGG16 which is the 16 layers version. VGG network is one type of &lt;a href="http://cs231n.github.io/convolutional-networks/"&gt;CNN network&lt;/a&gt;, which is designed for object recognition and achieved good performance on &lt;a href="http://www.image-net.org/"&gt;ImageNet&lt;/a&gt; dataset.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2017/05/vgg16.png" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;&lt;/p&gt;
+
+&lt;p&gt;VGG16 network take image with size 224x224x3 (3 channel for RGB) as input, and return a 1000 array as output, indicating which class the object in the image belongs to. Therefore, we need to first resize the image:  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    from keras.preprocessing import image
+    from keras.applications.vgg16 import preprocess_input
+
+    # format the image for VGG network
+    img = image.load_img(img_path, target_size=(224, 224))
+    x = image.img_to_array(img)
+    x = np.expand_dims(x, axis=0)
+    x = preprocess_input(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;VGG network consists of convolutional layers, pooling layers and full-connected layers. The last three layers are full-connected layers. The last layer is a softmax layer which only tell us which category the image belongs to. However, the second last layer, fc-2 layer, contains the features of a image as a 4096 array. Therefore, we get our output from the fc-2 layer. The model would look like this:  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    # load vgg16 model
+    model = VGG16(weights='imagenet', include_top=True)
+    featextractor_model = Model(input=model.input, 
+                                outputs=model.get_layer('fc2').output)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then, we can use this model to extract features:  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    feat = featextractor_model.predict(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="buildingtrainingthepredictivemodel"&gt;Building/Training The Predictive Model&lt;/h3&gt;
+
+&lt;p&gt;Let's first take a look at our predictive model for generating captions, then I will explain the model in more details. &lt;br&gt;
+&lt;img src="http://localhost:2368/content/images/2017/05/Untitled-Diagram.png" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;
+First, we need to preprocess our input captions and build a dictionary to map the words to index. Then we get the following inputs:&lt;/p&gt;
+
+&lt;table&gt;  
+    &lt;tr&gt;
+    &lt;th scope="row"&gt;feat&lt;/th&gt;
+    &lt;td&gt;image features&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+    &lt;th scope="row"&gt;captions&lt;/th&gt;
+    &lt;td&gt;for training, true caption. For prediction, #start# tag and previous prediction&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+    &lt;th scope="row"&gt;mask&lt;/th&gt;
+    &lt;td&gt;record previous words&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+    &lt;th scope="row"&gt;position&lt;/th&gt;
+    &lt;td&gt;position of current word in a sentence&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The features tell our model what objects are in the scene, and every words in the captions are telling our model, how to describe the scene. The mask tell our model which part of the scene have been described. The position input tell our model how far we have gone in the prediction process (the importance of this input would be mentioned later).&lt;/p&gt;
+
+&lt;p&gt;So, first, our model merge the caption input (each word in the caption) and position input using concatenate layer and go through a word embedding layer. Then all the inputs merge, and go through the LSTM cell. Then output of LSTM cell goes through &lt;a href="https://www.quora.com/How-does-the-dropout-method-work-in-deep-learning"&gt;Dropout&lt;/a&gt; and &lt;a href="https://www.quora.com/Why-does-batch-normalization-help"&gt;Batch Normalization&lt;/a&gt; layer to prevent the model from overfitting. At the end, we apply a activation layer and get the possibility distribution of next word. We can choose the word with largest possibility to be our "best word".  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    sent_input = Input(shape=(1,))
+    img_input = Input(shape=(DIM_INPUT,))
+    mask_input = Input(shape=(N_WORDS,))    # mark the previous word
+    position_input = Input(shape=(MAX_LEN,)) # mark the position of current word
+
+    # sentence embedding layer, get one word, output a vector
+    sent_embed_layer = Embedding(output_dim=DIM_EMBED, input_dim=N_WORDS, input_length=1)(sent_input)
+    sent_embed_layer = Reshape((DIM_EMBED,))(sent_embed_layer)
+    sent_embed_layer = concatenate([sent_embed_layer, position_input])
+    sent_embed_layer = Dense(DIM_EMBED)(sent_embed_layer)
+
+    # concatenate image and embedded word as input for LSTM
+    img_sent_merge_layer = concatenate([img_input, sent_embed_layer, mask_input])
+    img_sent_merge_layer = Reshape((1, DIM_HIDDEN+DIM_INPUT+N_WORDS))(img_sent_merge_layer)
+
+    lstm = LSTM(512)(img_sent_merge_layer)
+    # add dropout and batch normalization layer to prevent overfitting
+    lstm = Dropout(0.25)(lstm)
+    lstm = Dense(N_WORDS)(lstm)
+    lstm = BatchNormalization()(lstm)
+    out = Activation('softmax')(lstm)
+
+    self.model = Model(input=[img_input, sent_input, mask_input, position_input], output=out)
+    self.model.compile(loss='categorical_crossentropy',
+                       optimizer=optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=00))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Using our pre-built dictionary, we can "interpret" the index to word and generate our prediction. During the training process, the true output is the next word in the caption. And the period present the end of the caption. Finally, we can train our model!&lt;/p&gt;
+
+&lt;h3 id="imagecaptioning"&gt;Image Captioning&lt;/h3&gt;
+
+&lt;p&gt;Like training, we also need to get the features for each image to be predicted. So, the images go through the VGG16 network first, to generate the features. For captioning, we used the same LSTM mode. The first word input for the model is the "#start#" tag, and the following input are the prediction result from the previous iteration. During this process, we set the mask and position input accordingly. When we reach a prediction which produce '.', we get our final prediction!&lt;/p&gt;
+
+&lt;p&gt;Here is a example for generating caption--'a man on a bicycle down a dirt road.': &lt;br&gt;
+&lt;img src="http://localhost:2368/content/images/2017/05/prediction_process.png" alt="Image Captioning Using Neural Network (CNN &amp; LSTM)"&gt;&lt;/p&gt;
+
+&lt;p&gt;So, the first word is '#start#', the position is 0, and mask input is empty. The model would generate 'a' which is used as input for the next iteration. Then the word 'a' is marked by the mask input, and the position input move forward. By doing this until our model predict '.', we stop the model and get the final caption.  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;    mask = np.zeros((caption_len, self.n_words))
+    caption = []
+    for i in range(1, caption_len):
+        if i == 1:
+            cur_word = 0
+        else:
+            # take the prediction as next word
+            cur_word = next_word
+
+        # set mask
+        mask[i,:] = np.logical_or(mask[i,:], mask[i-1,:])
+        mask[i, cur_word] = 1
+
+        # set current word position
+        pos = np.zeros(self.max_len)
+        pos[i-1] = 1
+
+        pred = self.model.predict([np.array(image), np.array([cur_word]), np.array([mask[i-1,:]]), np.array([pos])])[0]
+        next_word = pred.argmax()
+
+        # decode the output to sentences
+        caption.append(self.ixtoword[next_word])
+        if self.ixtoword[next_word] == '.':
+            break
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;At the beginning, the position wasn't part of the input, and we generate some nonsense caption, like "a man in white shirt in white shirt in white shirt...". The  problem is when our model reach the second 'in', the features, caption, and mask input are exactly the same with the first one. Then our model would generate 'in white shirt' again. Therefore, we add the position input to our model so that it can know current captioning progress.&lt;/p&gt;
+
+&lt;h3 id="evaluation"&gt;Evaluation&lt;/h3&gt;
+
+&lt;p&gt;To evaluate the performance of our model, we use &lt;a href="http://www.aclweb.org/anthology/P02-1040.pdf"&gt;BLEU&lt;/a&gt; score to measure the accuracy of our prediction. For our baseline, we got BLEU score about 33.0. For our final model, we got BLEU score about 74.8.&lt;/p&gt;
+
+&lt;h2 id="nextsteps"&gt;Next Steps&lt;/h2&gt;
+
+&lt;p&gt;Apparently, our model is not perfect, neither is our prediction process. Sometimes, we may generate some terrible captions. We can try to replace LSTM with &lt;a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/"&gt;GRU&lt;/a&gt; (Gated Recurrent Unit), which is a variation of LSTM. To make our prediction process better, beam search would be a promising choice. Currently, we are taking a greedy approach in which we take input and iteratively output the word that is most likely to appear the next. Beam search would considers the set of n best sentences and keep track of resulting n of the candidates, which would help generate overall most probable caption.&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading! If you find anything I got wrong, please feel free to contact me through &lt;a href="mailto:Zhenguo.Chen@colorado.edu"&gt;Email&lt;/a&gt;. Or if you have any questions, please let me know. Thanks!&lt;/p&gt;</content:encoded></item><item><title>Welcome to Ghost</title><description>&lt;p&gt;You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you started. You can manage your content by signing in to the admin area at &lt;code&gt;&amp;lt;your blog URL&amp;gt;/ghost/&lt;/code&gt;. When you arrive, you can select this post from a list&lt;/p&gt;</description><link>http://localhost:2368/welcome-to-ghost/</link><guid isPermaLink="false">4ea505d3-621d-451a-b97f-f6dda8561b62</guid><category>Getting Started</category><dc:creator>Zhenguo Chen</dc:creator><pubDate>Tue, 16 May 2017 16:27:08 GMT</pubDate><content:encoded>&lt;p&gt;You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you started. You can manage your content by signing in to the admin area at &lt;code&gt;&amp;lt;your blog URL&amp;gt;/ghost/&lt;/code&gt;. When you arrive, you can select this post from a list on the left and see a preview of it on the right. Click the little pencil icon at the top of the preview to edit this post and read the next section!&lt;/p&gt;
+
+&lt;h2 id="gettingstarted"&gt;Getting Started&lt;/h2&gt;
+
+&lt;p&gt;Ghost uses something called Markdown for writing. Essentially, it's a shorthand way to manage your post formatting as you write!&lt;/p&gt;
+
+&lt;p&gt;Writing in Markdown is really easy. In the left hand panel of Ghost, you simply write as you normally would. Where appropriate, you can use &lt;em&gt;shortcuts&lt;/em&gt; to &lt;strong&gt;style&lt;/strong&gt; your content. For example, a list:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Item number one&lt;/li&gt;
+&lt;li&gt;Item number two
+&lt;ul&gt;&lt;li&gt;A nested item&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;A final item&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;or with numbers!&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remember to buy some milk  &lt;/li&gt;
+&lt;li&gt;Drink the milk  &lt;/li&gt;
+&lt;li&gt;Tweet that I remembered to buy the milk, and drank it&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id="links"&gt;Links&lt;/h3&gt;
+
+&lt;p&gt;Want to link to a source? No problem. If you paste in a URL, like &lt;a href="http://ghost.org"&gt;http://ghost.org&lt;/a&gt; - it'll automatically be linked up. But if you want to customise your anchor text, you can do that too! Here's a link to &lt;a href="http://ghost.org"&gt;the Ghost website&lt;/a&gt;. Neat.&lt;/p&gt;
+
+&lt;h3 id="whataboutimages"&gt;What about Images?&lt;/h3&gt;
+
+&lt;p&gt;Images work too! Already know the URL of the image you want to include in your article? Simply paste it in like this to make it show up:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ghost.org/images/ghost.png" alt="The Ghost Logo"&gt;&lt;/p&gt;
+
+&lt;p&gt;Not sure which image you want to use yet? That's ok too. Leave yourself a descriptive placeholder and keep writing. Come back later and drag and drop the image in to upload:&lt;/p&gt;
+
+&lt;h3 id="quoting"&gt;Quoting&lt;/h3&gt;
+
+&lt;p&gt;Sometimes a link isn't enough, you want to quote someone on what they've said. Perhaps you've started using a new blogging platform and feel the sudden urge to share their slogan? A quote might be just the way to do it!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Ghost - Just a blogging platform&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id="workingwithcode"&gt;Working with Code&lt;/h3&gt;
+
+&lt;p&gt;Got a streak of geek? We've got you covered there, too. You can write inline &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; blocks really easily with back ticks. Want to show off something more comprehensive? 4 spaces of indentation gets you there.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.awesome-thing {
+    display: block;
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="readyforabreak"&gt;Ready for a Break?&lt;/h3&gt;
+
+&lt;p&gt;Throw 3 or more dashes down on any new line and you've got yourself a fancy new divider. Aw yeah.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h3 id="advancedusage"&gt;Advanced Usage&lt;/h3&gt;
+
+&lt;p&gt;There's one fantastic secret about Markdown. If you want, you can write plain old HTML and it'll still work! Very flexible.&lt;/p&gt;
+
+&lt;p&gt;&lt;input type="text" placeholder="I'm an input field!"&gt;&lt;/p&gt;
+
+&lt;p&gt;That should be enough to get you started. Have fun - and let us know what you think :)&lt;/p&gt;</content:encoded></item></channel></rss>

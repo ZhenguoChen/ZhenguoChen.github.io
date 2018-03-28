@@ -8,7 +8,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=470956dbb0">
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=ca8d0f506c">
 
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <link rel="canonical" href="index.html">
@@ -30,6 +30,8 @@
     <meta name="twitter:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta name="twitter:label1" content="Written by">
     <meta name="twitter:data1" content="Zhenguo Chen">
+    <meta property="og:image:width" content="1920">
+    <meta property="og:image:height" content="1200">
     
     <script type="application/ld+json">
 {
@@ -61,7 +63,12 @@
     "url": "http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/",
     "datePublished": "2017-05-16T17:14:50.000Z",
     "dateModified": "2018-03-19T23:29:35.000Z",
-    "image": "http://localhost:2368/content/images/2017/05/sea.jpeg",
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://localhost:2368/content/images/2017/05/sea.jpeg",
+        "width": 1920,
+        "height": 1200
+    },
     "description": "In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:          A man on a bicycle down a dirt road.          a dog is running through the grass . These two images are random images downloaded",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -70,7 +77,7 @@
 }
     </script>
 
-    <script type="text/javascript" src="../public/ghost-sdk.js?v=470956dbb0"></script>
+    <script type="text/javascript" src="../public/ghost-sdk.js?v=ca8d0f506c"></script>
 <script type="text/javascript">
 ghost.init({
 	clientId: "ghost-frontend",
@@ -145,7 +152,7 @@ ghost.init({
 <p>To train an image captioning model, we used the <a href="http://shannon.cs.illinois.edu/DenotationGraph/">Flickr30K</a> dataset, which contains 30k images along with five captions for each image. And we extracted features from the images and save these them as numpy arrays. Then we fed the features into captioning model and got the model trained. Given a new image, we first do a feature extraction, then we feed the features into trained model and get prediction. Quite straightforward, right?<br>
 <img src="../content/images/2017/05/captioning-model.jpg" alt="captioning process"></p>
 <h2 id="baselinegistknn">Baseline: GIST &amp; KNN</h2>
-<p>For our baseline, we used GIST to present the images as their features which was array with length 4096. Then we fed these features into KNN model (use ball tree in sklearn):</p>
+<p>For our baseline, we used GIST to present the images as their features which was arrays with length 4096. Then we fed these features into KNN model (use ball tree in sklearn):</p>
 <pre><code>    # read image
     img = Image.open('./data/Flicker8k_Dataset/'+im_name)
     # convert to array
@@ -357,7 +364,7 @@ First, we need to preprocess our input captions and build a dictionary to map th
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=470956dbb0"></script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=ca8d0f506c"></script>
 
 
     <script>

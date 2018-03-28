@@ -1,20 +1,16 @@
 
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Image Captioning Using Neural Network (CNN &amp; LSTM)</title>
-    <meta name="description" content="">
-
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=470956dbb0">
 
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
-    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=d61c125b70">
-
-
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <link rel="canonical" href="index.html">
     <meta name="referrer" content="no-referrer-when-downgrade">
     <link rel="amphtml" href="amp/index.html">
@@ -22,21 +18,18 @@
     <meta property="og:site_name" content="Zhenguo Chen">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Image Captioning Using Neural Network (CNN &amp; LSTM)">
-    <meta property="og:description" content="In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:             A man on a bicycle down a dirt road.                a dog is running through the grass .    These two images are random images downloaded">
+    <meta property="og:description" content="In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:          A man on a bicycle down a dirt road.          a dog is running through the grass . These two images are random images downloaded">
     <meta property="og:url" content="http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/">
     <meta property="og:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta property="article:published_time" content="2017-05-16T17:14:50.000Z">
     <meta property="article:modified_time" content="2018-03-19T23:29:35.000Z">
-    <meta property="article:author" content="https://www.facebook.com/zhenguo.chen.96">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Image Captioning Using Neural Network (CNN &amp; LSTM)">
-    <meta name="twitter:description" content="In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:             A man on a bicycle down a dirt road.                a dog is running through the grass .    These two images are random images downloaded">
+    <meta name="twitter:description" content="In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:          A man on a bicycle down a dirt road.          a dog is running through the grass . These two images are random images downloaded">
     <meta name="twitter:url" content="http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/">
     <meta name="twitter:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta name="twitter:label1" content="Written by">
     <meta name="twitter:data1" content="Zhenguo Chen">
-    <meta property="og:image:width" content="1920">
-    <meta property="og:image:height" content="1200">
     
     <script type="application/ld+json">
 {
@@ -45,106 +38,114 @@
     "publisher": {
         "@type": "Organization",
         "name": "Zhenguo Chen",
-        "logo": "http://localhost:2368/ghost/img/ghosticon.jpg"
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/favicon.ico",
+            "width": 60,
+            "height": 60
+        }
     },
     "author": {
         "@type": "Person",
         "name": "Zhenguo Chen",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2018/03/2016-12-03-08.35.51.jpg",
+            "width": 236,
+            "height": 215
+        },
         "url": "http://localhost:2368/author/zhenguo/",
-        "sameAs": [
-            "https://www.facebook.com/zhenguo.chen.96"
-        ]
+        "sameAs": []
     },
     "headline": "Image Captioning Using Neural Network (CNN &amp; LSTM)",
     "url": "http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/",
     "datePublished": "2017-05-16T17:14:50.000Z",
     "dateModified": "2018-03-19T23:29:35.000Z",
-    "image": {
-        "@type": "ImageObject",
-        "url": "http://localhost:2368/content/images/2017/05/sea.jpeg",
-        "width": 1920,
-        "height": 1200
-    },
-    "description": "In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:             A man on a bicycle down a dirt road.                a dog is running through the grass .    These two images are random images downloaded",
+    "image": "http://localhost:2368/content/images/2017/05/sea.jpeg",
+    "description": "In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:          A man on a bicycle down a dirt road.          a dog is running through the grass . These two images are random images downloaded",
     "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "http://localhost:2368"
+        "@id": "http://localhost:2368/"
     }
 }
     </script>
 
-    <meta name="generator" content="Ghost 0.11">
+    <script type="text/javascript" src="../public/ghost-sdk.js?v=470956dbb0"></script>
+<script type="text/javascript">
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "6deaf8ef3edd"
+});
+</script>
+    <meta name="generator" content="Ghost 1.21">
     <link rel="alternate" type="application/rss+xml" title="Zhenguo Chen" href="../rss/index.html">
+
 </head>
-<body class="post-template nav-closed">
-
-    <div class="nav">
-    <h3 class="nav-title">Menu</h3>
-    <a href="index.html#" class="nav-close">
-        <span class="hidden">Close</span>
-    </a>
-    <ul>
-            <li class="nav-home"><a href="../">Home</a></li>
-            <li class="nav-github"><a href="https://github.com/ZhenguoChen">Github</a></li>
-            <li class="nav-email"><a href="mailto:Zhenguo.Chen@colorado.edu">Email</a></li>
-    </ul>
-        <a class="subscribe-button icon-feed" href="../rss/index.rss">Subscribe</a>
-</div>
-<span class="nav-cover"></span>
-
+<body class="post-template">
 
     <div class="site-wrapper">
 
         
 
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="../">Zhenguo Chen</a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
+    <li class="nav-github" role="menuitem"><a href="https://github.com/ZhenguoChen">Github</a></li>
+    <li class="nav-email" role="menuitem"><a href="mailto:Zhenguo.Chen@colorado.edu">Email</a></li>
+</ul>
 
-<header class="main-header post-head " style="background-image: url(../content/images/2017/05/sea.jpeg)">
-    <nav class="main-nav overlay clearfix">
-        
-            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
-    </nav>
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
 </header>
 
-<main class="content" role="main">
-    <article class="post">
 
-        <header class="post-header">
-            <h1 class="post-title">Image Captioning Using Neural Network (CNN &amp; LSTM)</h1>
-            <section class="post-meta">
-                <time class="post-date" datetime="2017-05-16">16 May 2017</time> 
-            </section>
-        </header>
+<main id="site-main" class="site-main outer" role="main">
+    <div class="inner">
 
-        <section class="post-content">
-            <p>In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:</p>
+        <article class="post-full post ">
 
-<figure>  
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2017-05-16">16 May 2017</time>
+                </section>
+                <h1 class="post-full-title">Image Captioning Using Neural Network (CNN &amp; LSTM)</h1>
+            </header>
+
+            <figure class="post-full-image" style="background-image: url(../content/images/2017/05/sea.jpeg)">
+            </figure>
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><p>In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:</p>
+<figure>
     <img src="../content/images/2017/05/image10.jpg" width="400" align="center">
     <figcaption align="center">A man on a bicycle down a dirt road.</figcaption>
-</figure>  
-
-<figure>  
+</figure>
+<figure>
     <img src="../content/images/2017/05/image1.jpg" width="400">
     <figcaption align="center">a dog is running through the grass .</figcaption>
-</figure>  
-
+</figure>
 <p>These two images are random images downloaded from internet, but our model can still generate realistic caption for the image. Our model is trying to understand the objects in the scene and generate a human readable caption. For our baseline, we use <a href="http://cvcl.mit.edu/Papers/OlivaTorralbaPBR2006.pdf">GIST</a> for feature extraction, and KNN (K Nearest Neighbors) for captioning. For our final model, we built our model using <a href="https://keras.io/">Keras</a>, and use <a href="http://www.robots.ox.ac.uk/~vgg/research/very_deep/">VGG</a> (Visual Geometry Group) neural network for feature extraction, <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">LSTM</a> for captioning. Our code with a writeup are available on <a href="https://github.com/ZhenguoChen/csci5622Project">Github</a>. Also, we have a short video on <a href="https://www.youtube.com/watch?v=f2waevH1b6I">YouTube</a>.</p>
-
 <h2 id="howthisworks">How this works</h2>
-
 <ul>
 <li>Feature extraction</li>
 <li>Train a captioning model</li>
 <li>Generate a caption from through model</li>
 </ul>
-
-<p>To train a image captioning model, we use the <a href="http://shannon.cs.illinois.edu/DenotationGraph/">Flickr30K</a> dataset, which contains 30k images along with five captions for each image. And we extract features from the images and save these them as numpy array. Then we feed the features into captioning model and get the model trained. Given a new image, we first do a feature extraction, then we feed the features into trained model and get prediction. Quite straightforward, right? <br>
+<p>To train an image captioning model, we used the <a href="http://shannon.cs.illinois.edu/DenotationGraph/">Flickr30K</a> dataset, which contains 30k images along with five captions for each image. And we extracted features from the images and save these them as numpy arrays. Then we fed the features into captioning model and got the model trained. Given a new image, we first do a feature extraction, then we feed the features into trained model and get prediction. Quite straightforward, right?<br>
 <img src="../content/images/2017/05/captioning-model.jpg" alt="captioning process"></p>
-
 <h2 id="baselinegistknn">Baseline: GIST &amp; KNN</h2>
-
-<p>For our baseline, we use GIST to present the images as their features which is array with length 4096. Then we fed these features into KNN model (use ball tree in sklearn):  </p>
-
+<p>For our baseline, we used GIST to present the images as their features which was array with length 4096. Then we fed these features into KNN model (use ball tree in sklearn):</p>
 <pre><code>    # read image
     img = Image.open('./data/Flicker8k_Dataset/'+im_name)
     # convert to array
@@ -152,32 +153,20 @@
     # get descriptor (features)
     desc = gist.extract(img)
 </code></pre>
-
 <pre><code>    # trains includes features and captions of images
     knn = BallTree(trains['feats'])
 </code></pre>
-
 <p>The training part is quite simple! Then we are going to do prediction. To get the prediction for test image A, we use GIST to extract features A' from A.  And we use BallTree to find the K nearest neighbors of A' from which we get all the candidate captions. The last step is deciding which caption we are going to use. Here, we make the decision according to <a href="https://arxiv.org/abs/1505.04467">consensus</a>. We use <a href="http://www.aclweb.org/anthology/P02-1040.pdf">BLEU</a> score in nltk to measure the similarity between two captions, then we choose the caption which maximize the following formula:</p>
-
-<p><img src="../content/images/2017/05/Screen-Shot-2017-05-17-at-10.51.55-AM.png" alt="consensus">
+<p><img src="../content/images/2017/05/Screen-Shot-2017-05-17-at-10.51.55-AM.png" alt="consensus"><br>
 Then we get our prediction! Simple enough! Let's look at something more complicated.</p>
-
 <h2 id="finalmodelvgglstmkeras">Final Model: VGG &amp; LSTM (Keras)</h2>
-
 <p>For our final, we built our model using Keras, which is a simple wrapper for implementing the building blocks of advanced machine learning algorithms. To achieve higher performance, we also use GPU. Here is the instruction of <a href="https://keras.io/#installation">install</a> Keras with GPU and use Tensorflow as backend.</p>
-
 <p>During training, we use VGG for feature extraction, then fed features, captions, mask (record previous words) and position (position of current in the caption) into LSTM. The ground truth Y is the next word in the caption.</p>
-
 <p>For prediction, we first extract features from image using VGG, then use #START# tag to start the prediction process. Finally, use a dictionary to interpret the output y into words.</p>
-
 <h3 id="featureextractionvgg1619">Feature Extraction: VGG16/19</h3>
-
 <p>There are two versions of VGG network, 16 layers and 19 layers. We mainly focus on VGG16 which is the 16 layers version. VGG network is one type of <a href="http://cs231n.github.io/convolutional-networks/">CNN network</a>, which is designed for object recognition and achieved good performance on <a href="http://www.image-net.org/">ImageNet</a> dataset.</p>
-
 <p><img src="../content/images/2017/05/vgg16.png" alt="VGG16 network"></p>
-
-<p>VGG16 network take image with size 224x224x3 (3 channel for RGB) as input, and return a 1000 array as output, indicating which class the object in the image belongs to. Therefore, we need to first resize the image:  </p>
-
+<p>VGG16 network take image with size 224x224x3 (3 channel for RGB) as input, and return a 1000 array as output, indicating which class the object in the image belongs to. Therefore, we need to first resize the image:</p>
 <pre><code>    from keras.preprocessing import image
     from keras.applications.vgg16 import preprocess_input
 
@@ -187,52 +176,42 @@ Then we get our prediction! Simple enough! Let's look at something more complica
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
 </code></pre>
-
-<p>VGG network consists of convolutional layers, pooling layers and full-connected layers. The last three layers are full-connected layers. The last layer is a softmax layer which only tell us which category the image belongs to. However, the second last layer, fc-2 layer, contains the features of a image as a 4096 array. Therefore, we get our output from the fc-2 layer. The model would look like this:  </p>
-
+<p>VGG network consists of convolutional layers, pooling layers and full-connected layers. The last three layers are full-connected layers. The last layer is a softmax layer which only tell us which category the image belongs to. However, the second last layer, fc-2 layer, contains the features of a image as a 4096 array. Therefore, we get our output from the fc-2 layer. The model would look like this:</p>
 <pre><code>    # load vgg16 model
     model = VGG16(weights='imagenet', include_top=True)
     featextractor_model = Model(input=model.input, 
                                 outputs=model.get_layer('fc2').output)
 </code></pre>
-
-<p>Then, we can use this model to extract features:  </p>
-
+<p>Then, we can use this model to extract features:</p>
 <pre><code>    feat = featextractor_model.predict(x)
 </code></pre>
-
 <h3 id="buildingtrainingthepredictivemodel">Building/Training The Predictive Model</h3>
-
-<p>Let's first take a look at our predictive model for generating captions, then I will explain the model in more details. <br>
-<img src="../content/images/2017/05/Untitled-Diagram.png" alt="predictive model">
+<p>Let's first take a look at our predictive model for generating captions, then I will explain the model in more details.<br>
+<img src="../content/images/2017/05/Untitled-Diagram.png" alt="predictive model"><br>
 First, we need to preprocess our input captions and build a dictionary to map the words to index. Then we get the following inputs:</p>
-
-<table>  
+<table>
     <tr>
     <th scope="row">feat</th>
     <td>image features</td>
     </tr>
+<pre><code>&lt;tr&gt;
+&lt;th scope="row"&gt;captions&lt;/th&gt;
+&lt;td&gt;for training, true caption. For prediction, #start# tag and previous prediction&lt;/td&gt;
+&lt;/tr&gt;
 
-    <tr>
-    <th scope="row">captions</th>
-    <td>for training, true caption. For prediction, #start# tag and previous prediction</td>
-    </tr>
+&lt;tr&gt;
+&lt;th scope="row"&gt;mask&lt;/th&gt;
+&lt;td&gt;record previous words&lt;/td&gt;
+&lt;/tr&gt;
 
-    <tr>
-    <th scope="row">mask</th>
-    <td>record previous words</td>
-    </tr>
-
-    <tr>
-    <th scope="row">position</th>
-    <td>position of current word in a sentence</td>
-    </tr>
+&lt;tr&gt;
+&lt;th scope="row"&gt;position&lt;/th&gt;
+&lt;td&gt;position of current word in a sentence&lt;/td&gt;
+&lt;/tr&gt;
+</code></pre>
 </table>
-
 <p>The features tell our model what objects are in the scene, and every words in the captions are telling our model, how to describe the scene. The mask tell our model which part of the scene have been described. The position input tell our model how far we have gone in the prediction process (the importance of this input would be mentioned later).</p>
-
-<p>So, first, our model merge the caption input (each word in the caption) and position input using concatenate layer and go through a word embedding layer. Then all the inputs merge, and go through the LSTM cell. Then output of LSTM cell goes through <a href="https://www.quora.com/How-does-the-dropout-method-work-in-deep-learning">Dropout</a> and <a href="https://www.quora.com/Why-does-batch-normalization-help">Batch Normalization</a> layer to prevent the model from overfitting. At the end, we apply a activation layer and get the possibility distribution of next word. We can choose the word with largest possibility to be our "best word".  </p>
-
+<p>So, first, our model merge the caption input (each word in the caption) and position input using concatenate layer and go through a word embedding layer. Then all the inputs merge, and go through the LSTM cell. Then output of LSTM cell goes through <a href="https://www.quora.com/How-does-the-dropout-method-work-in-deep-learning">Dropout</a> and <a href="https://www.quora.com/Why-does-batch-normalization-help">Batch Normalization</a> layer to prevent the model from overfitting. At the end, we apply a activation layer and get the possibility distribution of next word. We can choose the word with largest possibility to be our "best word".</p>
 <pre><code>    sent_input = Input(shape=(1,))
     img_input = Input(shape=(DIM_INPUT,))
     mask_input = Input(shape=(N_WORDS,))    # mark the previous word
@@ -259,18 +238,12 @@ First, we need to preprocess our input captions and build a dictionary to map th
     self.model.compile(loss='categorical_crossentropy',
                        optimizer=optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=00))
 </code></pre>
-
 <p>Using our pre-built dictionary, we can "interpret" the index to word and generate our prediction. During the training process, the true output is the next word in the caption. And the period present the end of the caption. Finally, we can train our model!</p>
-
 <h3 id="imagecaptioning">Image Captioning</h3>
-
 <p>Like training, we also need to get the features for each image to be predicted. So, the images go through the VGG16 network first, to generate the features. For captioning, we used the same LSTM mode. The first word input for the model is the "#start#" tag, and the following input are the prediction result from the previous iteration. During this process, we set the mask and position input accordingly. When we reach a prediction which produce '.', we get our final prediction!</p>
-
-<p>Here is a example for generating caption--'a man on a bicycle down a dirt road.': <br>
+<p>Here is a example for generating caption--'a man on a bicycle down a dirt road.':<br>
 <img src="../content/images/2017/05/prediction_process.png" alt="captioning example"></p>
-
-<p>So, the first word is '#start#', the position is 0, and mask input is empty. The model would generate 'a' which is used as input for the next iteration. Then the word 'a' is marked by the mask input, and the position input move forward. By doing this until our model predict '.', we stop the model and get the final caption.  </p>
-
+<p>So, the first word is '#start#', the position is 0, and mask input is empty. The model would generate 'a' which is used as input for the next iteration. Then the word 'a' is marked by the mask input, and the position input move forward. By doing this until our model predict '.', we stop the model and get the final caption.</p>
 <pre><code>    mask = np.zeros((caption_len, self.n_words))
     caption = []
     for i in range(1, caption_len):
@@ -296,84 +269,162 @@ First, we need to preprocess our input captions and build a dictionary to map th
         if self.ixtoword[next_word] == '.':
             break
 </code></pre>
-
 <p>At the beginning, the position wasn't part of the input, and we generate some nonsense caption, like "a man in white shirt in white shirt in white shirt...". The  problem is when our model reach the second 'in', the features, caption, and mask input are exactly the same with the first one. Then our model would generate 'in white shirt' again. Therefore, we add the position input to our model so that it can know current captioning progress.</p>
-
 <h3 id="evaluation">Evaluation</h3>
-
 <p>To evaluate the performance of our model, we use <a href="http://www.aclweb.org/anthology/P02-1040.pdf">BLEU</a> score to measure the accuracy of our prediction. For our baseline, we got BLEU score about 33.0. For our final model, we got BLEU score about 74.8.</p>
-
 <h2 id="nextsteps">Next Steps</h2>
-
 <p>Apparently, our model is not perfect, neither is our prediction process. Sometimes, we may generate some terrible captions. We can try to replace LSTM with <a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/">GRU</a> (Gated Recurrent Unit), which is a variation of LSTM. To make our prediction process better, beam search would be a promising choice. Currently, we are taking a greedy approach in which we take input and iteratively output the word that is most likely to appear the next. Beam search would considers the set of n best sentences and keep track of resulting n of the candidates, which would help generate overall most probable caption.</p>
-
 <p>Thanks for reading! If you find anything I got wrong, please feel free to contact me through <a href="mailto:Zhenguo.Chen@colorado.edu">Email</a>. Or if you have any questions, please let me know. Thanks!</p>
-            <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=819156208247732";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-			<div class="fb-comments" data-href="https://zhenguochen.github.io/image-captioning-using-neural-network-cnn-lstm/" data-numposts="10"></div>
-        </section>
-
-        <footer class="post-footer">
+</div>
+            </section>
 
 
+            <footer class="post-full-footer">
 
-            <section class="author">
-                <h4><a href="../author/zhenguo/">Zhenguo Chen</a></h4>
-
-                    <p>Read <a href="../author/zhenguo/">more posts</a> by this author.</p>
-                <div class="author-meta">
-                    
-                    
+                <section class="author-card">
+                        <img class="author-profile-image" src="../content/images/2018/03/2016-12-03-08.35.51.jpg" alt="Zhenguo Chen">
+                    <section class="author-card-content">
+                        <h4 class="author-card-name"><a href="../author/zhenguo/">Zhenguo Chen</a></h4>
+                            <p>Read <a href="../author/zhenguo/">more posts</a> by this author.</p>
+                    </section>
+                </section>
+                <div class="post-full-footer-right">
+                    <a class="author-card-button" href="../author/zhenguo/">Read More</a>
                 </div>
-            </section>
+
+            </footer>
 
 
-            <section class="share">
-                <h4>Share this post</h4>
-                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Image%20Captioning%20Using%20Neural%20Network%20(CNN%20%26%20LSTM)&amp;url=http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-                    <span class="hidden">Twitter</span>
-                </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-                    <span class="hidden">Facebook</span>
-                </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-                    <span class="hidden">Google+</span>
-                </a>
-            </section>
+        </article>
 
-
-        </footer>
-
-    </article>
+    </div>
 </main>
 
-<aside class="read-next">
-    <a class="read-next-story prev no-cover" href="../welcome-to-ghost/">
-        <section class="post">
-            <h2>Welcome to Ghost</h2>
-            <p>You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you…</p>
-        </section>
-    </a>
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+
+
+
+        </div>
+    </div>
 </aside>
 
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="../">
+            <span>Zhenguo Chen</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">Image Captioning Using Neural Network (CNN &amp; LSTM)</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=Image%20Captioning%20Using%20Neural%20Network%20(CNN%20%26%20LSTM)&amp;url=http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/image-captioning-using-neural-network-cnn-lstm/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
 
 
-        <footer class="site-footer clearfix">
-            <section class="copyright"><a href="../">Zhenguo Chen</a> © 2018</section>
-            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../">Zhenguo Chen</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="../">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
         </footer>
 
     </div>
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=470956dbb0"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+});
+</script>
+
+
     
-    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=d61c125b70"></script>
-    <script type="text/javascript" src="../assets/js/index.js?v=d61c125b70"></script>
 
 </body>

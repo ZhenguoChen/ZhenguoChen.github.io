@@ -21,6 +21,8 @@
     <meta property="og:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta property="article:published_time" content="2017-05-16T17:14:50.000Z">
     <meta property="article:modified_time" content="2018-03-19T23:29:35.000Z">
+    <meta property="article:tag" content="machine learning">
+    
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Image Captioning Using Neural Network (CNN &amp; LSTM)">
     <meta name="twitter:description" content="In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:          A man on a bicycle down a dirt road.          a dog is running through the grass . These two images are random images downloaded">
@@ -28,6 +30,8 @@
     <meta name="twitter:image" content="http://localhost:2368/content/images/2017/05/sea.jpeg">
     <meta name="twitter:label1" content="Written by">
     <meta name="twitter:data1" content="Zhenguo Chen">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="machine learning">
     <meta property="og:image:width" content="1920">
     <meta property="og:image:height" content="1200">
     
@@ -67,6 +71,7 @@
         "width": 1920,
         "height": 1200
     },
+    "keywords": "machine learning",
     "description": "In this blog, I will present an image captioning model, which generates a realistic caption for an input image. To help understand this topic, here are examples:          A man on a bicycle down a dirt road.          a dog is running through the grass . These two images are random images downloaded",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -178,21 +183,18 @@ First, we need to preprocess our input captions and build a dictionary to map th
     <th scope="row">feat</th>
     <td>image features</td>
     </tr>
-<pre><code>&lt;tr&gt;
-&lt;th scope="row"&gt;captions&lt;/th&gt;
-&lt;td&gt;for training, true caption. For prediction, #start# tag and previous prediction&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;th scope="row"&gt;mask&lt;/th&gt;
-&lt;td&gt;record previous words&lt;/td&gt;
-&lt;/tr&gt;
-
-&lt;tr&gt;
-&lt;th scope="row"&gt;position&lt;/th&gt;
-&lt;td&gt;position of current word in a sentence&lt;/td&gt;
-&lt;/tr&gt;
-</code></pre>
+    <tr>
+    <th scope="row">captions</th>
+    <td>for training, true caption. For prediction, #start# tag and previous prediction</td>
+    </tr>
+    <tr>
+    <th scope="row">mask</th>
+    <td>record previous words</td>
+    </tr>
+    <tr>
+    <th scope="row">position</th>
+    <td>position of current word in a sentence</td>
+    </tr>
 </table>
 <p>The features tell our model what objects are in the scene, and every words in the captions are telling our model, how to describe the scene. The mask tell our model which part of the scene have been described. The position input tell our model how far we have gone in the prediction process (the importance of this input would be mentioned later).</p>
 <p>So, first, our model merge the caption input (each word in the caption) and position input using concatenate layer and go through a word embedding layer. Then all the inputs merge, and go through the LSTM cell. Then output of LSTM cell goes through <a href="https://www.quora.com/How-does-the-dropout-method-work-in-deep-learning">Dropout</a> and <a href="https://www.quora.com/Why-does-batch-normalization-help">Batch Normalization</a> layer to prevent the model from overfitting. At the end, we apply a activation layer and get the possibility distribution of next word. We can choose the word with largest possibility to be our "best word".</p>
